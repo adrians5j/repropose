@@ -14,7 +14,7 @@ const withName = name => {
     );
 };
 
-test("\"withProps\" must work in conjuction with \"withStaticProps\"", async () => {
+test("\"withProps\" must work in conjunction with \"withStaticProps\"", async () => {
     const Model = compose(
         withProps({
             getInstanceName() {

@@ -42,7 +42,7 @@
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.3",
     "ramda": "^0.26.1",
-    "semantic-release": "^15.13.1"
+    "semantic-release": "^15.13.2"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0"
@@ -60,7 +60,8 @@
     "release": "npx semantic-release",
     "lint-staged": "npx lint-staged",
     "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate"
+    "contributors:generate": "all-contributors generate",
+    "semantic-release": "semantic-release"
   },
   "pre-commit": [
     "lint-staged"
