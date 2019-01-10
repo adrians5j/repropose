@@ -24,23 +24,23 @@ yarn add repropose
 ## Quick Example:
 Use `withProps` and `withStaticProps` [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function) to create a new function with additional instance and static props. To make the code easier to read, we utilize `compose` from popular [ramda]() package ([lodash](https://lodash.com/) also offers this).
 ```javascript
-import { compose } from "ramda";  
-import { withProps, withStaticProps } from "repropose";  
-  
-const Car = compose(  
-  withProps(() => ({  
-  size: "large",  
-  color: "red",  
-  weight: 2000  
-  })),  
-  withStaticProps({  
-  type: "car"  
-  })  
-)(function() {});  
-  
-const car = new Car();  
-console.log(car.size); // "large"  
-  
+import { compose } from "ramda";
+import { withProps, withStaticProps } from "repropose";
+
+const Car = compose(
+  withProps(() => ({
+    size: "large",
+    color: "red",
+    weight: 2000
+  })),
+  withStaticProps({
+    type: "car"
+  })
+)(function() {});
+
+const car = new Car();
+console.log(car.size); // "large"
+
 console.log(Car.type); // "car"
 ```
 
