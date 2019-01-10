@@ -1,3 +1,4 @@
+
 # 🎲 repropose
 [![Build Status](https://travis-ci.org/doitadrian/repropose.svg?branch=master)](https://travis-ci.org/doitadrian/repropose)
 [![Coverage Status](https://coveralls.io/repos/github/doitadrian/repropose/badge.svg?branch=master)](https://coveralls.io/github/doitadrian/repropose?branch=master)
@@ -8,19 +9,40 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
   
-A pair of higher order functions for defining additional static and instance properties.      
+A pair of higher order functions that create new functions with additional properties.
 
 ## Install
 ```
-npm install --save propulate
+npm install --save repropose
 ```
 
 Or if you prefer yarn: 
 ```
-yarn add propulate
+yarn add repropose
 ```
 
 ## Quick Example:
+Use `withProps` and `withStaticProps` [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function) to create a new function with additional instance and static props. To make the code easier to read, we utilize `compose` from popular [ramda]() package ([lodash](https://lodash.com/) also offers this).
+```javascript
+import { compose } from "ramda";  
+import { withProps, withStaticProps } from "repropose";  
+  
+const Car = compose(  
+  withProps(() => ({  
+  size: "large",  
+  color: "red",  
+  weight: 2000  
+  })),  
+  withStaticProps({  
+  type: "car"  
+  })  
+)(function() {});  
+  
+const car = new Car();  
+console.log(car.size); // "large"  
+  
+console.log(Car.type); // "car"
+```
 
 ## Contributors
 
