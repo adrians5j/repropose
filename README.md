@@ -122,11 +122,14 @@ This library is based on the following premise: [composition over inheritance](h
 
 There are a few problems with inheritance:
 
-#### "banana-gorilla-jungle" problem
+### 
+The main problem is that it forces you to define your classes in advance, which almost certainly will result in structural inneficiencies / refactors in the future.
+
+### "banana-gorilla-jungle" problem
 Sometimes you need to extend a class just to be able to access a single method. But often by extending the class, you don't receive the single method, but a whole set of methods and properties you won't even need for your particular task. This is also known as "banana-gorilla-jungle " problem, because instead of wanting a banana, you also get a gorilla which brings a whole jungle with it 🙃
 
-#### you cannot easily extend 2 classes (at least in JavaScript). On the other hand, with composition, you can easily combine several functions into one.
-
+### Cannot extend multiple classes 
+When working with classes, you cannot easily extend 2 classes (at least not in JavaScript). On the other hand, with composition, you can easily combine several functions into one, and apply needed functionality by doing that.
 
 Some of the following sources can be considered as sources of inspiration:
 
