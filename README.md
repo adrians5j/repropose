@@ -120,22 +120,7 @@ Note: don't use arrow functions if the function is working with `this` like in t
 
 This library is based on the following premise: [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). 
 
-There are a few problems with inheritance:
-
-### 
-The main problem is that it forces you to define your classes in advance, which almost certainly will result in structural inneficiencies / refactors in the future.
-
-### "banana-gorilla-jungle" problem
-Sometimes you need to extend a class just to be able to access a single method. But often by extending the class, you don't receive a single method, but a whole set of methods and properties you won't even need for your particular task. This is also known as the "banana-gorilla-jungle " problem, because instead of wanting a banana, you also get a gorilla which brings a whole jungle with it. 🍌🦍🌴🙃
-
-### Cannot extend multiple classes 
-When working with classes, you cannot easily extend 2 classes (at least not in JavaScript). On the other hand, with composition, you can easily combine several functions into one, and apply needed functionality by doing that.
-
-Some of the following sources can be considered as sources of inspiration:
-
-- https://www.youtube.com/watch?v=wfMtDGfHWpA
-- https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205 (transcript of the above video)
-- https://tylermcginnis.com/javascript-inheritance-vs-composition/
+There are a few problems when it comes to the inheritance approach, but the main one is that it forces you to define your classes / entities early in the project, which will, as new requests arrive, almost certainly result in structural inneficiencies / refactors in the future. [This video](https://www.youtube.com/watch?v=wfMtDGfHWpA) by the well-known MPJ describes this very nicely, so I encourage you to check it out. 🍌🦍🌴🙃
 
 The library is heavily utilized in the [Commodo - composeable models](https://github.com/doitadrian/commodo) library.
 
