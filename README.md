@@ -118,13 +118,20 @@ Note: don't use arrow functions if the function is working with `this` like in t
 
 ## The motivation
 
-`Composition > Inheritance`
+This library is based on the following premise: [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). 
 
-Please take a look at some of the following articles which were main sources of inspiration:
+There are a few problems with inheritance:
+- There are cases where you need to extend a class just to be able to access a single method. But by extending the class, you don't just receive the needed method, but often a whole set of methods and properties you won't even need for your particular case. This is also known as "banana-gorilla-jungle " problem.
+- you cannot easily extend 2 classes (at least in JavaScript). On the other hand, with composition, you can easily combine several functions into one.
+
+
+Some of the following sources can be considered as sources of inspiration:
 
 - https://www.youtube.com/watch?v=wfMtDGfHWpA
+- https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205 (transcript of above video)
+- https://tylermcginnis.com/javascript-inheritance-vs-composition/
 
-This way of thinking is the foundation of the [Commodo - composeable models](https://github.com/doitadrian/commodo) package.
+The library is heavily utilized in the [Commodo - composeable models](https://github.com/doitadrian/commodo) library.
 
 ## Reference
 
