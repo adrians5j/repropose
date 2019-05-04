@@ -57,8 +57,8 @@ console.log(vehicle.color); // "red"
 
 ## Composing functions
 
-From here, we can continue by creating a new `Car` function, 
-which will be comprised of all `Vehicle` props and few custom ones: 
+It's also possible to compose existing functions with a new set of props. Eg. a new `Car` function 
+can be composed with the existing `Vehicle`:
 
 ```javascript
 const Car = compose(
