@@ -11,7 +11,7 @@
   
 A pair of [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)
 that, based on the given base function, create a new function decorated 
-with additional function and instance properties.
+with additional function and instance properties ("props").
 
 ## Install
 ```
