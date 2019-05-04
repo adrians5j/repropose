@@ -65,7 +65,8 @@ It's also possible to compose existing functions with a new set of props. Althou
 const Car = compose(
   withProps({
     doorsCount: 0,
-    seatsCount: 0
+    seatsCount: 0,
+    speed: 100
   })
 )(Vehicle);
 
@@ -91,9 +92,44 @@ and are not linked in any way with the base functions.
 
 ## Defining methods
 
-Previous examples showed defining properties 
+In previous examples, all of the new props were basically simple string / number values. But props can also be functions. 
+
+```javascript
+const withNitro = fn => {
+  return compose(
+    withProps({
+      speedWithNitro() {
+        return this.speed * 2;
+      },
+      activateNitro() {
+        (...)
+      }
+    })
+  )(fn)
+};
+
+console.log(Vehicle.type); // "car"
+console.log(Car.type); // "car"
+
+const car = new Car();
+car.size = "large";
+car.color = "red";
+car.seatsCount = 5;
+
+console.log(car.size); // "large"
+console.log(car.color); // "red"
+console.log(car.seatsCount); // 5
+```
 
 ## The motivation
+
+`Composition > Inheritance`
+
+Please take a look at some of the following articles which were main sources of inspiration:
+
+- https://www.youtube.com/watch?v=wfMtDGfHWpA
+
+This way of thinking is the foundation of the [Commodo - composeable models](https://github.com/doitadrian/commodo) package.
 
 ## Reference
 
