@@ -62,6 +62,7 @@ Both `withProps` and `withStaticProps` can accept an object of new to-be-assigne
 It's also possible to compose existing functions with a new set of props. Although this was basically already done in the previous example, a more practical example would be composing the existing `Vehicle` function with a new set of props, thus creating a new `Car` function:
 
 ```javascript
+// All instances of Car function will be comprised of "Vehicle" and "doorsCount", "seatsCount" and "speed" props:
 const Car = compose(
   withProps({
     doorsCount: 0,
