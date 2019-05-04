@@ -90,35 +90,26 @@ additional car-type-specific ones.
 Note that functions created with shown HOFs are completely new functions, 
 and are not linked in any way with the base functions.
 
-## Defining methods
+## Defining functions
 
-In previous examples, all of the new props were basically simple string / number values. But props can also be functions. 
+Props can also be functions: 
 
 ```javascript
-const withNitro = fn => {
-  return compose(
-    withProps({
-      speedWithNitro() {
-        return this.speed * 2;
-      },
-      activateNitro() {
-        (...)
-      }
-    })
-  )(fn)
-};
-
-console.log(Vehicle.type); // "car"
-console.log(Car.type); // "car"
+const Car = compose(
+  withProps({
+    speed: 0,
+    nitroSpeedMultiplier: 2,
+    getSpeedWithNitro() {
+      return this.speed * this.nitroSpeedMultiplier;
+    }
+  })
+)(Vehicle);
 
 const car = new Car();
-car.size = "large";
-car.color = "red";
-car.seatsCount = 5;
+car.speed = 100;
 
-console.log(car.size); // "large"
-console.log(car.color); // "red"
-console.log(car.seatsCount); // 5
+console.log(car.speed); // 100
+console.log(car.getSpeedWithNitro()); // 200
 ```
 
 ## The motivation
