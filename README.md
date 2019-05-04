@@ -114,6 +114,8 @@ console.log(car.speed); // 100
 console.log(car.getSpeedWithNitro()); // 200
 ```
 
+Note: don't use arrow functions if the function is working with `this`, since it won't hold the proper object reference.
+
 ## The motivation
 
 `Composition > Inheritance`
