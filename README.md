@@ -9,7 +9,9 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
   
-A pair of higher order functions that create new functions with additional properties.
+A pair of [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)
+that, based on the given base function, create a new function decorated 
+with additional function and instance properties.
 
 ## Install
 ```
@@ -22,27 +24,81 @@ yarn add repropose
 ```
 
 ## Quick Example:
-Use `withProps` and `withStaticProps` [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function) to create a new function with additional instance and static props. To make the code easier to read, we utilize `compose` from popular [ramda]() package ([lodash](https://lodash.com/) also offers this).
+Use `withProps` and `withStaticProps` higher order functions 
+to create a new function with additional function and instance props. 
+To make the code easier to read, we utilize the `compose` function from 
+the popular [ramda](https://ramdajs.com/) package 
+([lodash](https://lodash.com/) also offers this).
+
+##x Base function
+
 ```javascript
 import { compose } from "ramda";
 import { withProps, withStaticProps } from "repropose";
 
-const Car = compose(
+const Vehicle = compose(
   withProps(() => ({
-    size: "large",
-    color: "red",
-    weight: 2000
+    size: "",
+    color: "",
+    weight: 0
   })),
   withStaticProps({
-    type: "car"
+    type: "vehicle"
   })
 )(function() {});
 
-const car = new Car();
-console.log(car.size); // "large"
+console.log(Vehicle.type); // "vehicle"
 
-console.log(Car.type); // "car"
+const vehicle = new Vehicle();
+vehicle.size = "large";
+vehicle.color = "red";
+
+console.log(vehicle.size); // "large"
+console.log(vehicle.color); // "red"
 ```
+
+## Composing functions
+
+From here, we can continue by creating a new `Car` function, 
+which will be comprised of all `Vehicle` props and few custom ones: 
+
+```javascript
+const Car = compose(
+  withProps({
+    doorsCount: 0,
+    seatsCount: 0
+  })
+)(Vehicle);
+
+console.log(Vehicle.type); // "car"
+console.log(Car.type); // "car"
+
+const car = new Car();
+car.size = "large";
+car.color = "red";
+car.seatsCount = 5;
+
+console.log(car.size); // "large"
+console.log(car.color); // "red"
+console.log(car.seatsCount); // 5
+```
+
+From here we can go even further, and define a few additional functions 
+that could be comprised of all `Car` functions' properties and 
+additional car-type-specific ones.
+
+Note that functions created with shown HOFs are completely new functions, 
+and are not linked in any way with the base functions.
+
+### Defining methods
+
+## Reference
+
+#### `withProps(props: {[string]: any} | (newInstance : Object) => {[string]: any}): Function`
+Creates a new function, whose instances are decorated with given props.
+
+#### `withStaticProps(props: {[string]: any} | (newFunction : Function) => {[string]: any}): Function`
+Creates a new function, with props assigned directly to it.
 
 ## Contributors
 
