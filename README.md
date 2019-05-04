@@ -88,7 +88,9 @@ additional car-type-specific ones.
 Note that functions created with shown HOFs are completely new functions, 
 and are not linked in any way with the base functions.
 
-### Defining methods
+## Defining methods
+
+## The motivation
 
 ## Reference
 
