@@ -134,7 +134,7 @@ When working with classes, you cannot easily extend 2 classes (at least not in J
 Some of the following sources can be considered as sources of inspiration:
 
 - https://www.youtube.com/watch?v=wfMtDGfHWpA
-- https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205 (transcript of above video)
+- https://medium.com/humans-create-software/composition-over-inheritance-cb6f88070205 (transcript of the above video)
 - https://tylermcginnis.com/javascript-inheritance-vs-composition/
 
 The library is heavily utilized in the [Commodo - composeable models](https://github.com/doitadrian/commodo) library.
