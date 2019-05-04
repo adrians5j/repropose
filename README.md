@@ -23,14 +23,12 @@ Or if you prefer yarn:
 yarn add repropose
 ```
 
-## Quick Example:
+## Usage
 Use `withProps` and `withStaticProps` higher order functions 
 to create a new function with additional function and instance props. 
 To make the code easier to read, we utilize the `compose` function from 
 the popular [ramda](https://ramdajs.com/) package 
 ([lodash](https://lodash.com/) also offers this).
-
-##x Base function
 
 ```javascript
 import { compose } from "ramda";
