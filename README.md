@@ -120,7 +120,7 @@ Note: don't use arrow functions if the function is working with `this` like in t
 
 This library is based on the following premise: [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). 
 
-There are a few problems when it comes to the inheritance approach, but the main one is that it forces you to define your classes / entities early in the project, which will, as new requests arrive, almost certainly result in structural inneficiencies / refactors in the future. [This video](https://www.youtube.com/watch?v=wfMtDGfHWpA) by the well-known MPJ describes this very nicely, so I encourage you to check it out. 🍌🦍🌴🙃
+There are a few problems when it comes to the inheritance approach, but the main one is that it forces you to define your classes / entities early in the project, which will, as new requests arrive, almost certainly result in structural inneficiencies / refactors in the future. [This video](https://www.youtube.com/watch?v=wfMtDGfHWpA) by the well-known MPJ describes this approach very nicely, so I encourage you to check it out. 🍌🦍🌴🙃
 
 The library is heavily utilized in the [Commodo - composeable models](https://github.com/doitadrian/commodo) library.
 
