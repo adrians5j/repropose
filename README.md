@@ -121,8 +121,11 @@ Note: don't use arrow functions if the function is working with `this` like in t
 This library is based on the following premise: [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). 
 
 There are a few problems with inheritance:
-- There are cases where you need to extend a class just to be able to access a single method. But by extending the class, you don't just receive the needed method, but often a whole set of methods and properties you won't even need for your particular case. This is also known as "banana-gorilla-jungle " problem.
-- you cannot easily extend 2 classes (at least in JavaScript). On the other hand, with composition, you can easily combine several functions into one.
+
+#### "banana-gorilla-jungle" problem
+Sometimes you need to extend a class just to be able to access a single method. But often by extending the class, you don't receive the single method, but a whole set of methods and properties you won't even need for your particular task. This is also known as "banana-gorilla-jungle " problem, because instead of wanting a banana, you also get a gorilla which brings a whole jungle with it 🙃
+
+#### you cannot easily extend 2 classes (at least in JavaScript). On the other hand, with composition, you can easily combine several functions into one.
 
 
 Some of the following sources can be considered as sources of inspiration:
