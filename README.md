@@ -24,10 +24,10 @@ yarn add repropose
 ```
 
 ## Usage
-The package exposes two higher order functions: `withProps` and `withStaticProps`. Use them to create new functions with additional function ("static") and instance props (props that will be passed to function instances). 
+The library exposes two higher order functions: `withProps` and `withStaticProps`. Use them to create new functions with additional function ("static") and instance props (props that will be passed to function instances). 
 
 In the following examples, to make the code more readable, we utilize the `compose` function from 
-the popular [ramda](https://ramdajs.com/) package 
+the popular [ramda](https://ramdajs.com/) library 
 ([lodash](https://lodash.com/) also offers this).
 
 ```javascript
