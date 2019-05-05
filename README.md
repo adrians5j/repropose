@@ -81,7 +81,7 @@ console.log(car.hasOpenedDoors()); // false
 
 car.openDoors(2);
 
-console.log(car.dorsOpenedCount); // 
+console.log(car.dorsOpenedCount); // 2
 console.log(car.hasOpenedDoors()); // true
 ```
 
