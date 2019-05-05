@@ -61,7 +61,7 @@ Note that functions created with shown HOFs are completely new functions, and ar
 
 ## Composing functions
 
-It's also possible to compose existing functions with a new set of props. Although this was basically already done in the previous example, a more practical example would be composing the existing `Vehicle` function with a new set of props, thus creating a new `Car` function:
+It's also possible to compose existing functions with a new set of props. Although this was basically already done in the previous example (base function was an empty function), a more practical example would be composing the existing `Vehicle` function with a new set of props, thus creating a new `Car` function:
 
 ```javascript
 // All instances of Car function will be comprised of all "Vehicle" 
