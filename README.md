@@ -65,7 +65,7 @@ It's also possible to compose existing functions with a new set of props. Althou
 
 ```javascript
 // All instances of Car function will be comprised of all "Vehicle" 
-// function props and "doorsCount", "seatsCount" and "speed" props.
+// function's props and "doorsCount", "seatsCount" and "speed" props.
 const Car = compose(
   withProps({
     doorsCount: 0,
@@ -123,7 +123,8 @@ Note: don't use arrow functions if the function is working with `this` like in t
 You can also create custom HOFs that you can selectively apply where needed. Consider the following example:
 
 ```javascript
-// When needed, apply "withNitro" HOF to append a piece of functionality to an existing function and its instances.
+// When needed, apply "withNitro" HOF to append a piece of 
+// functionality to an existing function and its instances.
 const withCarProps = fn => {
   return compose(
     withProps({
