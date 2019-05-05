@@ -57,6 +57,8 @@ console.log(vehicle.color); // "red"
 
 Both `withProps` and `withStaticProps` can accept an object of new to-be-assigned props or a function that returns them. The benefit of using a function is that it receives a reference to the new instance (`withProps`) and new function (`withStaticProps`) as first argument, which is useful when there's a need to check already assigned props on the previous / base function.
 
+Note that functions created with shown HOFs are completely new functions, and are not linked in any way with the base functions.
+
 ## Composing functions
 
 It's also possible to compose existing functions with a new set of props. Although this was basically already done in the previous example, a more practical example would be composing the existing `Vehicle` function with a new set of props, thus creating a new `Car` function:
@@ -68,7 +70,7 @@ const Car = compose(
   withProps({
     doorsCount: 0,
     seatsCount: 0,
-    speed: 100
+    speed: 0
   })
 )(Vehicle);
 
@@ -87,34 +89,89 @@ console.log(car.seatsCount); // 5
 
 From here we can go even further, and define a few additional functions 
 that could be comprised of all `Car` functions' properties and 
-additional car-type-specific ones.
+additional car-type-specific ones. Compose as many functions as needed.
 
-Note that functions created with shown HOFs are completely new functions, 
-and are not linked in any way with the base functions.
+## Function props
 
-## Defining functions
-
-Props can also be functions: 
+Props can also be functions:
 
 ```javascript
 const Car = compose(
   withProps({
-    speed: 0,
-    nitroSpeedMultiplier: 2,
-    getSpeedWithNitro() {
-      return this.speed * this.nitroSpeedMultiplier;
+    dorsOpenedCount: 0,
+    openDoors(count) {
+      this.dorsOpenedCount = count;
+    }
+    hasOpenedDoors() {
+      return this.dorsOpenedCount > 0;
     }
   })
 )(Vehicle);
 
 const car = new Car();
-car.speed = 100;
+console.log(car.hasOpenedDoors()); // false
 
-console.log(car.speed); // 100
-console.log(car.getSpeedWithNitro()); // 200
+car.openDoors(2);
+
+console.log(car.dorsOpenedCount); // 
+console.log(car.hasOpenedDoors()); // true
 ```
 
 Note: don't use arrow functions if the function is working with `this` like in the above example, since it won't hold the correct object reference.
+
+## Custom HOFs
+You can also create custom HOFs that you can selectively apply where needed. Consider the following example:
+
+```javascript
+// When needed, apply "withNitro" HOF to append a piece of functionality to an existing function and its instances.
+const withCarProps = fn => {
+  return compose(
+    withProps({
+      doorsCount: 0,
+      seatsCount: 0,
+      speed: 0,
+      getSpeed() {
+        return this.speed;
+      }
+    })
+  )(fn)
+};
+
+const withNitro = ({ nitroSpeedMultiplier }) => {
+  return fn => {
+    return compose(
+    withProps({
+      nitroEnabled: false,
+      enableNitro() {
+        this.nitroEnabled = true;
+      },
+      getSpeed() {
+        if (this.nitroEnabled) {
+          return this.speed * nitroSpeedMultiplier;
+        }
+        return this.speed;
+      }
+    })
+  )(fn)
+  }
+};
+
+const Car = compose(
+  withCarProps(),
+  withNitro()
+)(Vehicle);
+
+const car = new Car();
+car.speed = 100;
+
+console.log(car.getSpeed()); // 100
+
+car.enableNitro({ nitroSpeedMultiplier: 2.5 });
+
+console.log(car.nitroEnabled); // true
+console.log(car.getSpeed()); // 250
+
+```
 
 ## The motivation
 
