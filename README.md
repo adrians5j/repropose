@@ -9,9 +9,9 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
   
-A pair of [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)
-that, based on the given base function, create a new function decorated 
-with additional function and instance properties ("props"). It also enables function composition - combining multiple functions into a new one.
+A set of [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)
+that will, based on the given base function, create a new function decorated 
+with additional function and instance properties ("props").
 
 ## Install
 ```
