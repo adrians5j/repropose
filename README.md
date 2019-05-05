@@ -176,7 +176,7 @@ console.log(car.nitroEnabled); // true
 console.log(car.getSpeed()); // 250
 ```
 
-You can use this idea to create a set of HOFs that are responsible for applying specific functionality and then apply them where necessary.
+You can use this idea to create a set of HOFs that are responsible for applying specific functionality and then compose them as necessary.
 
 ## The motivation
 
