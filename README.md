@@ -55,7 +55,7 @@ console.log(vehicle.size); // "large"
 console.log(vehicle.color); // "red"
 ```
 
-Both `withProps` and `withStaticProps` can accept an object of new to-be-assigned props or a function that returns them. The benefit of using a function is that it receives a reference to the new instance (`withProps`) and new function (`withStaticProps`) as first argument, which is useful when there's a need to check already assigned props on the previous / base function.
+Both `withProps` and `withStaticProps` can accept an object that represents new to-be-assigned props or a function that returns it. The benefit of using a function is that it receives a reference to the new instance (`withProps`) and new function (`withStaticProps`) as first argument, which is useful when there's a need to check already assigned props on the previous / base function.
 
 Note that functions created with shown HOFs are completely new functions, and are not linked in any way with the base functions.
 
