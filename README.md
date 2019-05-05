@@ -59,34 +59,6 @@ Both `withProps` and `withStaticProps` can accept an object of new to-be-assigne
 
 Note that functions created with shown HOFs are completely new functions, and are not linked in any way with the base functions.
 
-## Functions as new props
-
-Props can also be functions:
-
-```javascript
-const Car = compose(
-  withProps({
-    dorsOpenedCount: 0,
-    openDoors(count) {
-      this.dorsOpenedCount = count;
-    }
-    hasOpenedDoors() {
-      return this.dorsOpenedCount > 0;
-    }
-  })
-)(Vehicle);
-
-const car = new Car();
-console.log(car.hasOpenedDoors()); // false
-
-car.openDoors(2);
-
-console.log(car.dorsOpenedCount); // 2
-console.log(car.hasOpenedDoors()); // true
-```
-
-Note: don't use arrow functions if the function is working with `this` like in the above example, since it won't hold the correct object reference.
-
 ## Composing functions
 
 It's also possible to compose existing functions with a new set of props. Although this was basically already done in the previous example, a more practical example would be composing the existing `Vehicle` function with a new set of props, thus creating a new `Car` function:
@@ -118,6 +90,34 @@ console.log(car.seatsCount); // 5
 From here we can go even further, and define a few additional functions 
 that could be comprised of all `Car` functions' properties and 
 additional car-type-specific ones. Compose as many functions as needed.
+
+## Functions as new props
+
+Props can also be functions:
+
+```javascript
+const Car = compose(
+  withProps({
+    dorsOpenedCount: 0,
+    openDoors(count) {
+      this.dorsOpenedCount = count;
+    }
+    hasOpenedDoors() {
+      return this.dorsOpenedCount > 0;
+    }
+  })
+)(Vehicle);
+
+const car = new Car();
+console.log(car.hasOpenedDoors()); // false
+
+car.openDoors(2);
+
+console.log(car.dorsOpenedCount); // 2
+console.log(car.hasOpenedDoors()); // true
+```
+
+Note: don't use arrow functions if the function is working with `this` like in the above example, since it won't hold the correct object reference.
 
 ## Custom HOFs
 You can also create custom HOFs that you can selectively apply where needed. Consider the following example:
