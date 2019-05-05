@@ -120,46 +120,49 @@ console.log(car.hasOpenedDoors()); // true
 Note: don't use arrow functions if the function is working with `this` like in the above example, since it won't hold the correct object reference.
 
 ## Custom HOFs
-You can also create custom HOFs that you can selectively apply where needed. Consider the following example:
+You can also create custom HOFs which you can selectively apply where needed. Consider the following example:
 
 ```javascript
-// When needed, apply "withNitro" HOF to append a piece of 
-// functionality to an existing function and its instances.
-const withCarProps = fn => {
-  return compose(
-    withProps({
-      doorsCount: 0,
-      seatsCount: 0,
-      speed: 0,
-      getSpeed() {
-        return this.speed;
-      }
-    })
-  )(fn)
+// We extracted the Car props into a custom HOF.
+const withCarProps = () => {
+  return fn => {
+    return compose(
+      withProps({
+        doorsCount: 0,
+        seatsCount: 0,
+        speed: 0,
+        getSpeed() {
+          return this.speed;
+       }
+      })
+    )(fn)
+  }
 };
 
+// Where needed, apply "withNitro" HOF to append a piece of 
+// functionality to an existing function and its instances.
 const withNitro = ({ nitroSpeedMultiplier }) => {
   return fn => {
     return compose(
-    withProps({
-      nitroEnabled: false,
-      enableNitro() {
-        this.nitroEnabled = true;
-      },
-      getSpeed() {
-        if (this.nitroEnabled) {
-          return this.speed * nitroSpeedMultiplier;
+      withProps({
+        nitroEnabled: false,
+        enableNitro() {
+          this.nitroEnabled = true;
+        },
+        getSpeed() {
+          if (this.nitroEnabled) {
+            return this.speed * nitroSpeedMultiplier;
+          }
+          return this.speed;
         }
-        return this.speed;
-      }
-    })
-  )(fn)
+      })
+    )(fn)
   }
 };
 
 const Car = compose(
-  withCarProps(),
-  withNitro()
+  withNitro({ nitroSpeedMultiplier: 2.5 }),
+  withCarProps()
 )(Vehicle);
 
 const car = new Car();
@@ -167,12 +170,13 @@ car.speed = 100;
 
 console.log(car.getSpeed()); // 100
 
-car.enableNitro({ nitroSpeedMultiplier: 2.5 });
+car.enableNitro();
 
 console.log(car.nitroEnabled); // true
 console.log(car.getSpeed()); // 250
-
 ```
+
+You can use this idea to create a set of HOFs that are responsible for applying specific functionality and then apply them where necessary.
 
 ## The motivation
 
