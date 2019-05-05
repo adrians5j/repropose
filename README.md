@@ -118,7 +118,7 @@ Note: don't use arrow functions if the function is working with `this` like in t
 
 ## The motivation
 
-This library is based on the following premise: [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance). 
+This library is based on [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance) premise.
 
 There are a few problems when it comes to the inheritance approach, but the main one is that it forces you to define your classes / entities early in the project, which will, as new requests arrive, almost certainly result in structural inneficiencies / refactors in the future. [This video](https://www.youtube.com/watch?v=wfMtDGfHWpA) by the already well-known MPJ describes this approach very well, so I encourage you to check it out. 🍌🦍🌴🙃
 
