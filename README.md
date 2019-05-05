@@ -74,7 +74,7 @@ const Car = compose(
   })
 )(Vehicle);
 
-console.log(Vehicle.type); // "car"
+console.log(Vehicle.type); // "vehicle"
 console.log(Car.type); // "car"
 
 const car = new Car();
