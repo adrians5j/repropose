@@ -89,7 +89,7 @@ console.log(car.seatsCount); // 5
 
 From here we can go even further, and define a few additional functions 
 that could be comprised of all `Car` functions' properties and 
-additional car-type-specific ones. Compose as many functions as needed.
+additional specific-car-type ones. Compose as many functions as needed.
 
 ## Functions as new props
 
