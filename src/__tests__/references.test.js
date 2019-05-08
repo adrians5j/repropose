@@ -46,3 +46,28 @@ test(`"this" / "instance" references test`, async () => {
     expect(model.getObject().number).toBe(30);
     expect(model.object.number).toBe(30);
 });
+
+test(`"this" / "instance" references test 2`, async () => {
+    const Model = compose(
+        withProps({
+            fields: { number: { value: 5 } }
+        }),
+        withProps(instance => ({
+            fields: {},
+            getField(name) {
+                return this.fields[name];
+            },
+            numbersX3: () => {
+                return [instance.fields.number, instance.getField("number")];
+            },
+            numbersX3Function()  {
+                return [instance.fields.number, instance.getField("number"), this.getField("number").value * 3];
+            }
+        }))
+    )(function() {});
+
+    const model = new Model();
+
+    expect(model.numbersX3()).toEqual([undefined, undefined]);
+    expect(model.numbersX3Function()).toEqual([undefined, undefined, 15]);
+});
