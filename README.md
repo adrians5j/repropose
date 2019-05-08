@@ -24,7 +24,7 @@ yarn add repropose
 ```
 
 ## Usage
-The library exposes two higher order functions: `withProps` and `withStaticProps`. Use them to create new functions with additional props assigned to the newly created function and to its instances.
+The library exposes two higher order functions: `withProps` and `withStaticProps`. Use them to create a new function decorated with additional function and instance properties ("props").
 
 In the following examples, to make the code more readable, we utilize the `compose` function from 
 the popular [ramda](https://ramdajs.com/) library 
@@ -89,7 +89,7 @@ console.log(car.seatsCount); // 5
 
 From here we can go even further, and define a few additional functions 
 that could be comprised of all `Car` functions' properties and 
-additional car-type-specific ones. Compose as many functions as needed.
+additional specific-car-type ones. Compose as many functions as needed.
 
 ## Functions as new props
 
