@@ -60,8 +60,12 @@ test(`"this" / "instance" references test 2`, async () => {
             numbersX3: () => {
                 return [instance.fields.number, instance.getField("number")];
             },
-            numbersX3Function()  {
-                return [instance.fields.number, instance.getField("number"), this.getField("number").value * 3];
+            numbersX3Function() {
+                return [
+                    instance.fields.number,
+                    instance.getField("number"),
+                    this.getField("number").value * 3
+                ];
             }
         }))
     )(function() {});
@@ -70,4 +74,33 @@ test(`"this" / "instance" references test 2`, async () => {
 
     expect(model.numbersX3()).toEqual([undefined, undefined]);
     expect(model.numbersX3Function()).toEqual([undefined, undefined, 15]);
+});
+
+test(`object are carried by reference, even when instantiating :/`, async () => {
+    // This means once you assign an object via withProps to a key,
+    // it will be 'static' or in other words, every instance will carry
+    // a reference to it. If you change a value in one of the instances,
+    // all instances will see the change. Might be good in some cases, but
+    // in others not.
+
+    const Model = compose(
+        withProps({
+            someObject: { someKey: { someOtherKey: "value" } }
+        })
+    )(function() {});
+
+    const model1 = new Model();
+    const model2 = new Model();
+
+    expect(model1.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+    expect(model2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    model1.someObject.someKey = { itIsNow: "empty" };
+
+    expect(model1.someObject).toEqual({ someKey: { itIsNow: "empty" } });
+    expect(model2.someObject).toEqual({ someKey: { itIsNow: "empty" } });
+
+    model1.someObject.someKey = 123;
+    expect(model1.someObject).toEqual({ someKey: 123 });
+    expect(model2.someObject).toEqual({ someKey: 123 });
 });
