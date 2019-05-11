@@ -116,6 +116,34 @@ test(`objects are carried by reference - use functions to avoid if necessary`, a
         }))
     )(function() {});
 
+    // So when withProps is called (function pasted for reference):
+    // 1. Return a new function which when called with base function...
+    // 2. Will create a new function which once instantiated...
+    // 3. Will instantiate the received base function and apply all of the props
+    //    to the newly created one. Since props is a function, it will get
+    //    called, so new object will be created.
+
+    /**
+    const withProps = props => {
+        return fn => {
+            const newFn = function() {
+                Object.defineProperties(this, Object.getOwnPropertyDescriptors(new fn()));
+                if (typeof props === "function") {
+                    const newProps = props(this);
+                    Object.defineProperties(this, Object.getOwnPropertyDescriptors(newProps));
+                } else {
+                    Object.defineProperties(this, Object.getOwnPropertyDescriptors(props));
+                }
+            };
+
+            // Make sure to pass static props as well.
+            Object.assign(newFn, fn);
+
+            return newFn;
+        };
+    };
+    */
+
     const model1 = new Model();
     const model2 = new Model();
 
