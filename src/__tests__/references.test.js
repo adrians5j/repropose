@@ -106,7 +106,7 @@ test(`object are carried by reference, even when instantiating :/`, async () => 
 });
 
 test(`objects are carried by reference - use functions to avoid if necessary`, async () => {
-    const Model = compose(
+    const ModelA = compose(
         withProps(() => ({
             someObject: {
                 someKey: {
@@ -115,6 +115,16 @@ test(`objects are carried by reference - use functions to avoid if necessary`, a
             }
         }))
     )(function() {});
+
+    const ModelB = compose(
+        withProps(() => ({
+            someObject2: {
+                someKey2: {
+                    someOtherKey2: "value2"
+                }
+            }
+        }))
+    )(ModelA);
 
     // So when withProps is called (function pasted for reference):
     // 1. Return a new function which when called with base function...
@@ -144,18 +154,40 @@ test(`objects are carried by reference - use functions to avoid if necessary`, a
     };
     */
 
-    const model1 = new Model();
-    const model2 = new Model();
 
-    expect(model1.someObject).toEqual({ someKey: { someOtherKey: "value" } });
-    expect(model2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+    const modelA1 = new ModelA();
+    const modelA2 = new ModelA();
 
-    model1.someObject.someKey = { itIsNow: "empty" };
+    const modelB1 = new ModelB();
+    const modelB2 = new ModelB();
 
-    expect(model1.someObject).toEqual({ someKey: { itIsNow: "empty" } });
-    expect(model2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+    // Ensure A1 / A2 are not related.
+    expect(modelA1.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+    expect(modelA2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
 
-    model1.someObject.someKey = 123;
-    expect(model1.someObject).toEqual({ someKey: 123 });
-    expect(model2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+    modelA1.someObject.someKey = { itIsNow: "empty" };
+
+    expect(modelA1.someObject).toEqual({ someKey: { itIsNow: "empty" } });
+    expect(modelA2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    modelA1.someObject.someKey = 123;
+    expect(modelA1.someObject).toEqual({ someKey: 123 });
+    expect(modelA2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    // Okay, now let's ensure B1 / B2 are not related to A1 / A2.
+    expect(modelB1.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+    expect(modelB2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    modelB1.someObject.someKey = { itIsNow: "empty" };
+
+    expect(modelB1.someObject).toEqual({ someKey: { itIsNow: "empty" } });
+    expect(modelB2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    modelB1.someObject.someKey = 123;
+    expect(modelB1.someObject).toEqual({ someKey: 123 });
+    expect(modelB2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    // Make sure nothing happened to A1 / A2.
+    expect(modelA1.someObject).toEqual({ someKey: 123 });
+    expect(modelA2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
 });
