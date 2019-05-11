@@ -104,3 +104,30 @@ test(`object are carried by reference, even when instantiating :/`, async () => 
     expect(model1.someObject).toEqual({ someKey: 123 });
     expect(model2.someObject).toEqual({ someKey: 123 });
 });
+
+test(`objects are carried by reference - use functions to avoid if necessary`, async () => {
+    const Model = compose(
+        withProps(() => ({
+            someObject: {
+                someKey: {
+                    someOtherKey: "value"
+                }
+            }
+        }))
+    )(function() {});
+
+    const model1 = new Model();
+    const model2 = new Model();
+
+    expect(model1.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+    expect(model2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    model1.someObject.someKey = { itIsNow: "empty" };
+
+    expect(model1.someObject).toEqual({ someKey: { itIsNow: "empty" } });
+    expect(model2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+
+    model1.someObject.someKey = 123;
+    expect(model1.someObject).toEqual({ someKey: 123 });
+    expect(model2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+});
