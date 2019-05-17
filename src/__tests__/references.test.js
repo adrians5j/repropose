@@ -1,5 +1,5 @@
 import { compose } from "ramda";
-import { withProps } from "repropose";
+import { withProps, withStaticProps } from "repropose";
 
 test(`"this" / "instance" references test`, async () => {
     const Model = compose(
@@ -154,7 +154,6 @@ test(`objects are carried by reference - use functions to avoid if necessary`, a
     };
     */
 
-
     const modelA1 = new ModelA();
     const modelA2 = new ModelA();
 
@@ -190,4 +189,77 @@ test(`objects are carried by reference - use functions to avoid if necessary`, a
     // Make sure nothing happened to A1 / A2.
     expect(modelA1.someObject).toEqual({ someKey: 123 });
     expect(modelA2.someObject).toEqual({ someKey: { someOtherKey: "value" } });
+});
+
+test("withStaticProps - object references are preserved", async () => {
+    const Model = compose(
+        withStaticProps({
+            object: {
+                nested: null
+            }
+        })
+    )(function() {});
+
+    const model1 = new Model();
+    const model2 = new Model();
+
+    model1.constructor.object.nested = 123;
+    expect(model1.constructor.object.nested).toBe(123);
+    expect(model2.constructor.object.nested).toBe(123);
+});
+
+test("withStaticProps - functional object references are preserved", async () => {
+    const Model = compose(
+        withStaticProps(() => ({
+            object: {
+                nested: null
+            }
+        }))
+    )(function() {});
+
+    const model1 = new Model();
+    const model2 = new Model();
+
+    model1.constructor.object.nested = 123;
+    expect(model1.constructor.object.nested).toBe(123);
+    expect(model2.constructor.object.nested).toBe(123);
+});
+
+test("withStaticProps - composed props references are preserved", async () => {
+    const BaseModel = compose(
+        withStaticProps(() => ({
+            object: {
+                nested: null
+            }
+        }))
+    )(function() {});
+
+    const ModelA = compose(
+        withProps({
+            getNested() {
+                return this.constructor.object.nested;
+            }
+        })
+    )(BaseModel);
+
+    const ModelB = compose(
+        withProps({
+            getNested() {
+                return this.constructor.object.nested;
+            }
+        })
+    )(BaseModel);
+
+    ModelA.object.nested = "works";
+
+    const modelA = new ModelA();
+    const modelB = new ModelB();
+
+    expect(modelA.constructor.object.nested).toBe("works");
+    expect(modelB.constructor.object.nested).toBe("works");
+    expect(modelA.getNested()).toBe("works");
+    expect(modelB.getNested()).toBe("works");
+
+    expect(ModelA.object.nested).toBe("works");
+    expect(ModelB.object.nested).toBe("works");
 });
