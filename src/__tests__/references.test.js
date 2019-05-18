@@ -1,7 +1,62 @@
 import { compose } from "ramda";
 import { withProps, withStaticProps } from "repropose";
 
-test(`"this" / "instance" references test`, async () => {
+test(`"this" / "instance" references test 1`, async () => {
+    const Model = compose(
+        withProps({
+            a: 1,
+            b: 2
+        }),
+        withProps(() => ({
+            c: 3,
+            d: {
+                a: 4
+            }
+        })),
+        withProps({
+            e: 5,
+            f: {},
+            g: {} // Override with number.
+        })
+    )(function() {});
+
+    const model1 = new Model();
+    const model2 = new Model();
+
+    model1.a = 11;
+    model1.b = 22;
+    model1.c = 33;
+    model1.d.a = 44;
+    model1.e = 55;
+    model1.f.a = 66;
+    model1.g = 77;
+
+    model2.a = 111;
+    model2.b = 222;
+    model2.c = 333;
+    model2.d.a = 444;
+    model2.e = 555;
+    model2.f.a = 666;
+    model2.g = 777;
+
+    expect(model1.a).toBe(11);
+    expect(model1.b).toBe(22);
+    expect(model1.c).toBe(33);
+    expect(model1.d.a).toBe(44);
+    expect(model1.e).toBe(55);
+    expect(model1.f.a).toBe(666); // <== watch out for this one.
+    expect(model1.g).toBe(77);
+
+    expect(model2.a).toBe(111);
+    expect(model2.b).toBe(222);
+    expect(model2.c).toBe(333);
+    expect(model2.d.a).toBe(444);
+    expect(model2.e).toBe(555);
+    expect(model2.f.a).toBe(666);
+    expect(model2.g).toBe(777);
+});
+
+test(`"this" / "instance" references test 2`, async () => {
     const Model = compose(
         withProps(instance => {
             return {
@@ -47,7 +102,7 @@ test(`"this" / "instance" references test`, async () => {
     expect(model.object.number).toBe(30);
 });
 
-test(`"this" / "instance" references test 2`, async () => {
+test(`"this" / "instance" references test 3`, async () => {
     const Model = compose(
         withProps({
             fields: { number: { value: 5 } }
