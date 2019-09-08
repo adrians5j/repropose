@@ -1,12 +1,13 @@
-const withStaticProps = props => {
-    return fn => {
-        const newFn = function() {
-            Object.defineProperties(this, Object.getOwnPropertyDescriptors(new fn()));
-        };
+const withStaticProps = (props: Function | Object) => {
+    return (baseFn: Function) => {
+        if (!baseFn) {
+            baseFn = function() {
+                this.construct();
+            };
+        }
 
-        Object.assign(newFn, fn, typeof props === "function" ? props(newFn) : props);
-
-        return newFn;
+        Object.assign(baseFn, typeof props === "function" ? props(baseFn) : props);
+        return baseFn;
     };
 };
 

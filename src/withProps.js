@@ -1,19 +1,33 @@
 const withProps = props => {
-    return fn => {
-        const newFn = function() {
-            Object.defineProperties(this, Object.getOwnPropertyDescriptors(new fn()));
-            if (typeof props === "function") {
-                const newProps = props(this);
-                Object.defineProperties(this, Object.getOwnPropertyDescriptors(newProps));
-            } else {
-                Object.defineProperties(this, Object.getOwnPropertyDescriptors(props));
-            }
-        };
+    return baseFn => {
+        if (!baseFn) {
+            baseFn = function() {
+                this.construct();
+            };
+        }
 
-        // Make sure to pass static props as well.
-        Object.assign(newFn, fn);
+        if (!baseFn.__withProps) {
+            baseFn.__withProps = [];
+            baseFn.prototype.construct = function() {
+                this.constructor.__withProps.forEach(propsToAssign => {
+                    if (typeof propsToAssign === "function") {
+                        Object.defineProperties(
+                            this,
+                            Object.getOwnPropertyDescriptors(propsToAssign(this))
+                        );
+                    } else {
+                        Object.defineProperties(
+                            this,
+                            Object.getOwnPropertyDescriptors(propsToAssign)
+                        );
+                    }
+                });
+            };
+        }
 
-        return newFn;
+        baseFn.__withProps.push(props);
+
+        return baseFn;
     };
 };
 
