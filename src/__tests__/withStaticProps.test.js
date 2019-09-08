@@ -8,7 +8,7 @@ test("\"withStaticProps\" must assign static properties", async () => {
             b: 2,
             c: 3
         })
-    )(function() {});
+    )();
 
     expect(Object.keys(Model)).toEqual(["a", "b", "c"]);
     expect(Model.a).toBe(1);
@@ -23,7 +23,7 @@ test("\"withStaticProps\" must also be able to receive a callback function and p
                 ...{ x: 1, y: 2, z: 3 }
             };
         })
-    )(function() {});
+    )();
 
     expect(Object.keys(Model)).toEqual(["x", "y", "z"]);
     expect(Model.x).toBe(1);
@@ -41,7 +41,7 @@ test("\"withStaticProps\" must also be able to receive a callback function and p
                 ...{ j: 4, k: 5, l: 6 }
             };
         })
-    )(function() {});
+    )();
 
     expect(ModelWithMultipleProps.a).toBe(1);
     expect(ModelWithMultipleProps.b).toBe(2);
@@ -75,7 +75,9 @@ test("\"withStaticProps\" - assigned static props must be accessible inside inst
         withStaticProps({
             getStaticName1: () => "Works 1!"
         })
-    )(function() {});
+    )(function() {
+        this.construct();
+    });
 
     const model = new Model();
 

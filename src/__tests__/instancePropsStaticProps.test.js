@@ -42,7 +42,7 @@ test("\"withProps\" must work in conjunction with \"withStaticProps\"", async ()
             staticB: 2,
             staticC: 3
         })
-    )(function() {});
+    )();
 
     expect(Model.staticA).toBe(1);
     expect(Model.staticB).toBe(2);

@@ -23,7 +23,7 @@ test("must be able to do checks with instanceOf", async () => {
             staticE: 5,
             staticF: 6
         })
-    )(function() {});
+    )();
 
     const model1 = new Model1();
     expect(model1 instanceof Model1).toBe(true);
@@ -95,9 +95,9 @@ test("must be able to do checks with instanceOf", async () => {
 
     const model4 = new Model4();
     expect(model4 instanceof Model4).toBe(true);
-    expect(model4 instanceof Model3).toBe(false);
-    expect(model4 instanceof Model2).toBe(false);
-    expect(model4 instanceof Model1).toBe(false);
+    expect(model4 instanceof Model3).toBe(true);
+    expect(model4 instanceof Model2).toBe(true);
+    expect(model4 instanceof Model1).toBe(true);
 
     const Model5 = compose(
         withStaticProps({
@@ -109,10 +109,10 @@ test("must be able to do checks with instanceOf", async () => {
 
     const model5 = new Model5();
     expect(model5 instanceof Model5).toBe(true);
-    expect(model5 instanceof Model4).toBe(false);
-    expect(model5 instanceof Model3).toBe(false);
-    expect(model5 instanceof Model2).toBe(false);
-    expect(model5 instanceof Model1).toBe(false);
+    expect(model5 instanceof Model4).toBe(true);
+    expect(model5 instanceof Model3).toBe(true);
+    expect(model5 instanceof Model2).toBe(true);
+    expect(model5 instanceof Model1).toBe(true);
 
     const Model6 = compose(
         withStaticProps({
@@ -124,9 +124,9 @@ test("must be able to do checks with instanceOf", async () => {
 
     const model6 = new Model6();
     expect(model6 instanceof Model6).toBe(true);
-    expect(model6 instanceof Model5).toBe(false);
-    expect(model6 instanceof Model4).toBe(false);
-    expect(model6 instanceof Model3).toBe(false);
-    expect(model6 instanceof Model2).toBe(false);
-    expect(model6 instanceof Model1).toBe(false);
+    expect(model6 instanceof Model5).toBe(true);
+    expect(model6 instanceof Model4).toBe(true);
+    expect(model6 instanceof Model3).toBe(true);
+    expect(model6 instanceof Model2).toBe(true);
+    expect(model6 instanceof Model1).toBe(true);
 });

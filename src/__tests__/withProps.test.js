@@ -8,7 +8,7 @@ test("\"withProps\" must assign instance properties", async () => {
             b: 2,
             c: 3
         })
-    )(function() {});
+    )();
 
     const model = new Model();
 
@@ -27,7 +27,7 @@ test("\"withProps\" must also be able to receive a callback function and pass ex
                 z: 3
             };
         })
-    )(function() {});
+    )();
 
     const model = new Model();
 
@@ -47,7 +47,7 @@ test("\"withProps\" must also be able to receive a callback function and pass ex
                 ...{ j: 4, k: 5, l: 6 }
             };
         })
-    )(function() {});
+    )();
 
     const modelWithMultipleProps = new ModelWithMultipleProps();
 
@@ -95,7 +95,7 @@ test("when using \"withProps\", all previous and upcoming props must be accessib
                 return (await this.method1()) + 5;
             }
         }))
-    )(function() {});
+    )();
 
     const model = new Model();
 

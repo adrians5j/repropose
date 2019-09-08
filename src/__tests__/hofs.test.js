@@ -42,7 +42,9 @@ test("must be able to pass getters", async () => {
     const Car = compose(
         withNitro({ nitroSpeedMultiplier: 2.5 }),
         withCarProps()
-    )(function() {});
+    )(function() {
+        this.construct();
+    });
 
     const car = new Car();
     car.speed = 100;

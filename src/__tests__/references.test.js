@@ -1,7 +1,7 @@
 import { compose } from "ramda";
 import { withProps, withStaticProps } from "repropose";
 
-test(`"this" / "instance" references test 1`, async () => {
+test("\"this\" / \"instance\" references test 1", async () => {
     const Model = compose(
         withProps({
             a: 1,
@@ -18,7 +18,7 @@ test(`"this" / "instance" references test 1`, async () => {
             f: {},
             g: {} // Override with number.
         })
-    )(function() {});
+    )();
 
     const model1 = new Model();
     const model2 = new Model();
@@ -56,7 +56,7 @@ test(`"this" / "instance" references test 1`, async () => {
     expect(model2.g).toBe(777);
 });
 
-test(`"this" / "instance" references test 2`, async () => {
+test("\"this\" / \"instance\" references test 2", async () => {
     const Model = compose(
         withProps(instance => {
             return {
@@ -81,12 +81,12 @@ test(`"this" / "instance" references test 2`, async () => {
                 ];
             }
         }))
-    )(function() {});
+    )();
 
     const model = new Model();
 
     expect(model.number).toBe(10);
-    expect(model.numbersX2()).toEqual([6, 2, 60, 2]);
+    expect(model.numbersX2()).toEqual([20, 60, 60, 60]);
 
     expect(Object.keys(model)).toEqual(["getObject", "object", "number", "numbersX2"]);
 
@@ -102,7 +102,7 @@ test(`"this" / "instance" references test 2`, async () => {
     expect(model.object.number).toBe(30);
 });
 
-test(`"this" / "instance" references test 3`, async () => {
+test("\"this\" / \"instance\" references test 3", async () => {
     const Model = compose(
         withProps({
             fields: { number: { value: 5 } }
@@ -113,25 +113,25 @@ test(`"this" / "instance" references test 3`, async () => {
                 return this.fields[name];
             },
             numbersX3: () => {
-                return [instance.fields.number, instance.getField("number")];
+                return [instance.fields.number.value, instance.getField("number").value];
             },
             numbersX3Function() {
                 return [
-                    instance.fields.number,
-                    instance.getField("number"),
+                    instance.fields.number.value,
+                    instance.getField("number").value,
                     this.getField("number").value * 3
                 ];
             }
         }))
-    )(function() {});
+    )();
 
     const model = new Model();
 
-    expect(model.numbersX3()).toEqual([undefined, undefined]);
-    expect(model.numbersX3Function()).toEqual([undefined, undefined, 15]);
+    expect(model.numbersX3()).toEqual([5, 5]);
+    expect(model.numbersX3Function()).toEqual([5, 5, 15]);
 });
 
-test(`object are carried by reference, even when instantiating :/`, async () => {
+test("object are carried by reference, even when instantiating :/", async () => {
     // This means once you assign an object via withProps to a key,
     // it will be 'static' or in other words, every instance will carry
     // a reference to it. If you change a value in one of the instances,
@@ -142,7 +142,7 @@ test(`object are carried by reference, even when instantiating :/`, async () => 
         withProps({
             someObject: { someKey: { someOtherKey: "value" } }
         })
-    )(function() {});
+    )();
 
     const model1 = new Model();
     const model2 = new Model();
@@ -160,7 +160,7 @@ test(`object are carried by reference, even when instantiating :/`, async () => 
     expect(model2.someObject).toEqual({ someKey: 123 });
 });
 
-test(`objects are carried by reference - use functions to avoid if necessary`, async () => {
+test("objects are carried by reference - use functions to avoid if necessary", async () => {
     const ModelA = compose(
         withProps(() => ({
             someObject: {
@@ -169,7 +169,7 @@ test(`objects are carried by reference - use functions to avoid if necessary`, a
                 }
             }
         }))
-    )(function() {});
+    )();
 
     const ModelB = compose(
         withProps(() => ({
@@ -180,34 +180,6 @@ test(`objects are carried by reference - use functions to avoid if necessary`, a
             }
         }))
     )(ModelA);
-
-    // So when withProps is called (function pasted for reference):
-    // 1. Return a new function which when called with base function...
-    // 2. Will create a new function which once instantiated...
-    // 3. Will instantiate the received base function and apply all of the props
-    //    to the newly created one. Since props is a function, it will get
-    //    called, so new object will be created.
-
-    /**
-    const withProps = props => {
-        return fn => {
-            const newFn = function() {
-                Object.defineProperties(this, Object.getOwnPropertyDescriptors(new fn()));
-                if (typeof props === "function") {
-                    const newProps = props(this);
-                    Object.defineProperties(this, Object.getOwnPropertyDescriptors(newProps));
-                } else {
-                    Object.defineProperties(this, Object.getOwnPropertyDescriptors(props));
-                }
-            };
-
-            // Make sure to pass static props as well.
-            Object.assign(newFn, fn);
-
-            return newFn;
-        };
-    };
-    */
 
     const modelA1 = new ModelA();
     const modelA2 = new ModelA();
@@ -287,7 +259,7 @@ test("withStaticProps - composed props references are preserved", async () => {
                 nested: null
             }
         }))
-    )(function() {});
+    )();
 
     const ModelA = compose(
         withProps({

@@ -19,7 +19,9 @@ test("must be able to pass getters", async () => {
                 return this.g + 100;
             }
         }))
-    )(function() {});
+    )(function() {
+        this.construct();
+    });
 
     const model = new Model();
     expect(model.d).toBe(4);
